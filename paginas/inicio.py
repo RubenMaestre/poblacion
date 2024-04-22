@@ -37,37 +37,39 @@ def display():
     df_continentes['Year_Label'] = df_continentes['Year'].apply(
         lambda x: f"{abs(x)} a.C." if x < 0 else f"{x} d.C."
     )
-    
-    # Identificar los ticks que vamos a utilizar basándonos en los datos disponibles
-    years_for_ticks = [-10000, -5000, -2000, -1000, -500, -100, 0, 100, 300, 500, 800, 
-                       1000, 1200, 1400, 1600, 1800, 1900, 1950, 1980, 2000, 2010, 2020, 2050, 2100]
-    tickvals = [df_continentes[df_continentes['Year'] == year]['Year_Label'].iloc[0] 
-                for year in years_for_ticks if year in df_continentes['Year'].values]
-    ticktext = [f"{abs(year)} a.C." if year < 0 else f"{year} d.C." for year in years_for_ticks
-                if year in df_continentes['Year'].values]
 
-    # Crear la figura con Plotly
+    # Definir ticks para el eje x que sean uniformes a lo largo de la escala de tiempo
+    # Desde el año más antiguo hasta el más reciente, en intervalos de 100 años
+    tickvals = np.arange(df_continentes['Year'].min(), df_continentes['Year'].max() + 1, 100)
+    ticktext = [f"{abs(year)} a.C." if year < 0 else f"{year} d.C." for year in tickvals]
+
+    # Crear la figura
     fig = go.Figure()
-    
-    # Añadir una línea para cada 'Entity'
+
+    # Añadir trazos para cada entidad
     for entity in df_continentes['Entity'].unique():
         df_entity = df_continentes[df_continentes['Entity'] == entity]
         fig.add_trace(go.Scatter(
-            x=df_entity['Year_Label'], 
+            x=df_entity['Year'],  # Usar la columna 'Year' directamente para un mapeo correcto en el eje x
             y=df_entity['Population density'],
-            mode='lines', 
+            mode='lines',
             name=entity
         ))
-    
-    # Actualizar los ticks del eje X con los valores y textos personalizados
+
+    # Actualizar los ticks del eje X para mostrar cada 100 años y asegurar que se extienden a lo largo de todo el eje
     fig.update_xaxes(tickvals=tickvals, ticktext=ticktext)
 
-    # Actualizar el resto de la figura
+    # Configurar el layout de la figura para que incluya todos los años
     fig.update_layout(
         title='Evolución de la densidad de población por zona geográfica',
         xaxis_title='Año',
         yaxis_title='Densidad de población (personas por km²)',
-        legend_title='Zona geográfica'
+        legend_title='Zona geográfica',
+        xaxis=dict(
+            tickmode='array',
+            type='linear',
+            showgrid=True,  # Puede activar o desactivar la cuadrícula para mayor claridad
+        )
     )
 
     # Mostrar la figura en Streamlit
