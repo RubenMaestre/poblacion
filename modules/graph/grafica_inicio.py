@@ -6,7 +6,7 @@ from modules.cargar_df import cargar_df
 # Cargar datos
 df, df_continentes, df_ingresos = cargar_df()
 
-def grafica_simple(df_continentes):
+def grafica_rango_years(df_continentes):
     if not df_continentes.empty:
         # Crear la figura utilizando Plotly Express
         fig = px.line(
