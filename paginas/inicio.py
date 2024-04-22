@@ -38,30 +38,37 @@ def display():
         lambda x: f"{abs(x)} a.C." if x < 0 else f"{x} d.C."
     )
     
-    # Define los ticks personalizados basándose en los años disponibles en el DataFrame
-    custom_x_ticks = [-10000, -5000, -2000, -1000, -500, -100, 0, 100, 300, 500, 800, 1000, 1200, 
-                      1400, 1600, 1800, 1900, 1950, 1980, 2000, 2010, 2020, 2050, 2100]
-    custom_x_labels = [f"{abs(year)} a.C." if year < 0 else f"{year} d.C." for year in custom_x_ticks]
-    
-    # Inicializar la figura de Plotly con objeto Graph
-    fig = go.Figure()
+    # Identificar los ticks que vamos a utilizar basándonos en los datos disponibles
+    years_for_ticks = [-10000, -5000, -2000, -1000, -500, -100, 0, 100, 300, 500, 800, 
+                       1000, 1200, 1400, 1600, 1800, 1900, 1950, 1980, 2000, 2010, 2020, 2050, 2100]
+    tickvals = [df_continentes[df_continentes['Year'] == year]['Year_Label'].iloc[0] 
+                for year in years_for_ticks if year in df_continentes['Year'].values]
+    ticktext = [f"{abs(year)} a.C." if year < 0 else f"{year} d.C." for year in years_for_ticks
+                if year in df_continentes['Year'].values]
 
-    # Añadir trazas para cada entidad
+    # Crear la figura con Plotly
+    fig = go.Figure()
+    
+    # Añadir una línea para cada 'Entity'
     for entity in df_continentes['Entity'].unique():
         df_entity = df_continentes[df_continentes['Entity'] == entity]
-        fig.add_trace(go.Scatter(x=df_entity['Year_Label'], y=df_entity['Population density'],
-                                 mode='lines', name=entity))
+        fig.add_trace(go.Scatter(
+            x=df_entity['Year_Label'], 
+            y=df_entity['Population density'],
+            mode='lines', 
+            name=entity
+        ))
+    
+    # Actualizar los ticks del eje X con los valores y textos personalizados
+    fig.update_xaxes(tickvals=tickvals, ticktext=ticktext)
 
-    # Actualizar los ticks del eje x para que se correspondan con los años personalizados
-    fig.update_xaxes(tickvals=custom_x_ticks, ticktext=custom_x_labels)
-
-    # Actualizar título y etiquetas
+    # Actualizar el resto de la figura
     fig.update_layout(
         title='Evolución de la densidad de población por zona geográfica',
         xaxis_title='Año',
         yaxis_title='Densidad de población (personas por km²)',
         legend_title='Zona geográfica'
     )
-    
-    # Integrar la gráfica en Streamlit
+
+    # Mostrar la figura en Streamlit
     st.plotly_chart(fig, use_container_width=True)
