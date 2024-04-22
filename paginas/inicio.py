@@ -7,7 +7,7 @@ from modules.cargar_df import cargar_df
 from modules.graph.grafica_inicio import grafica_rango_years
 
 def display():
-    df, df_continentes = cargar_df()
+    df, df_continentes, df_ingresos = cargar_df()
     # Imagen de cabecera (si decides volver a incluirla)
     # st.image('sources/cabecera.jpg', use_column_width=True)
 
