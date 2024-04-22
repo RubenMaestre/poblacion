@@ -1,7 +1,10 @@
+#modules/graph/grafica_inicio.py
 import numpy as np
 import plotly.graph_objects as go
 import streamlit as st
 from modules.cargar_df import cargar_df
+
+
 df, df_continentes = cargar_df()
 
 def grafica_rango_years(df_continentes):
@@ -56,6 +59,3 @@ def grafica_rango_years(df_continentes):
 
     # Mostrar la figura en Streamlit
     st.plotly_chart(fig, use_container_width=True)
-
-# Asegúrate de llamar a la función display con el DataFrame correcto
-grafica_rango_years(df_continentes)

@@ -3,10 +3,11 @@ import streamlit as st
 import plotly.express as px
 import numpy as np
 import plotly.graph_objects as go
+from modules.cargar_df import cargar_df 
 from modules.graph.grafica_inicio import grafica_rango_years
 
 def display():
-
+    df, df_continentes = cargar_df()
     # Imagen de cabecera (si decides volver a incluirla)
     # st.image('sources/cabecera.jpg', use_column_width=True)
 
@@ -26,5 +27,5 @@ def display():
         </div>
         """, unsafe_allow_html=True)
 
-    grafica_rango_years()
+    grafica_rango_years(df_continentes)
     
