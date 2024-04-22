@@ -58,3 +58,5 @@ def grafica_rango_years(df_continentes):
 
     # Mostrar la figura en Streamlit
     st.plotly_chart(fig, use_container_width=True)
+
+grafica_rango_years(df_continentes)
