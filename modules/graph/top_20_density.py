@@ -17,10 +17,10 @@ def plot_top_20_density(df):
             top_20_density,
             x='Entity',  # Nombres de los países
             y='Population density',  # Densidad de población
-            title='Top 20 Países por Densidad de Población en 2024',
-            labels={'Entity': 'País', 'Population density': 'Densidad de Población (personas por km²)'},
+            title='Top 20 países por densidad de población en 2024',
+            labels={'Entity': 'País', 'Population density': 'Densidad de población (personas por km²)'},
             color='Population density',  # Color en función de la densidad
-            height=900
+            height=1000
         )
 
         # Ordenar las barras de mayor a menor
