@@ -1,5 +1,6 @@
 #modules/graph/grafica_inicio.py
 import plotly.express as px
+import numpy as np
 import streamlit as st
 from modules.cargar_df import cargar_df
 
