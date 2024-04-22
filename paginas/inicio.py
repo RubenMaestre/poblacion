@@ -36,40 +36,27 @@ def display():
     df_continentes['Year_Label'] = df_continentes['Year'].apply(
     lambda x: f"{abs(x)} BCE" if x < 0 else f"{x} CE"
     )
+    # Define los ticks personalizados basándose en los años disponibles en el DataFrame
+    years_for_ticks = [-10000, -5000, -2000, -1000, -500, -100, 0, 100, 300, 500, 800, 1000, 1200, 
+                       1400, 1600, 1800, 1900, 1950, 1980, 2000, 2010, 2020, 2050, 2100]
+    years_available = df_continentes['Year'].unique()
+    custom_x_ticks = [year for year in years_for_ticks if year in years_available]
     
-    if df_continentes is not None:
-        # Asumimos que la columna 'Year' existe en df_continentes y es de tipo numérico
-        df_continentes['Year_Label'] = df_continentes['Year'].apply(
-            lambda x: f"{abs(x)} a.C." if x < 0 else f"{x} d.C."
-        )
+    # Crear las etiquetas de los ticks personalizados
+    custom_x_labels = [f"{abs(year)} a.C." if year < 0 else f"{year} d.C." for year in custom_x_ticks]
 
-        # Define los años específicos para los ticks del eje x que existen en df_continentes
-        all_years = df_continentes['Year'].unique()
-        custom_x_ticks = [-10000, -5000, -2000, -1000, -500, -100, 0, 100, 300, 500, 800, 
-                          1000, 1200, 1400, 1600, 1800, 1900, 1950, 1980, 2000, 2010, 2020, 2050, 2100]
-        # Asegúrate de que solo se usen los años que existen en el DataFrame
-        custom_x_ticks = [year for year in custom_x_ticks if year in all_years]
-
-        # Genera las etiquetas de ticks correspondientes a partir de 'Year_Label'
-        custom_x_labels = [f"{abs(year)} a.C." if year < 0 else f"{year} d.C." for year in custom_x_ticks]
-
-        fig = px.line(df_continentes, x='Year_Label', y='Population density', color='Entity',
-                      title='Evolución de la densidad de población por zona geográfica',
-                      labels={
-                          'Population density': 'Densidad de población (personas por km²)',
+    # Crear la figura de Plotly
+    fig = px.line(df_continentes, x='Year_Label', y='Population density', color='Entity',
+                  title='Evolución de la densidad de población por zona geográfica',
+                  labels={'Population density': 'Densidad de población (personas por km²)',
                           'Year_Label': 'Año',
-                          'Entity': 'Zona geográfica'
-                      })
+                          'Entity': 'Zona geográfica'})
 
-        # Actualiza los ticks del eje x para que se correspondan con los años personalizados
-        fig.update_xaxes(tickvals=custom_x_ticks, ticktext=custom_x_labels)
+    # Actualizar los ticks del eje x para que se correspondan con los años personalizados
+    fig.update_xaxes(tickvals=custom_x_ticks, ticktext=custom_x_labels)
 
-        # Suavizar las líneas de la gráfica, asegurándonos de que no estamos en un modo 'scattergl'
-        if 'scattergl' not in fig.data[0].type:
-            fig.update_traces(line_shape='spline')
+    # Suavizar las líneas de la gráfica
+    fig.update_traces(line_shape='spline')
 
-        # Integrar la gráfica en Streamlit
-        st.plotly_chart(fig, use_container_width=True)
-
-    # Espacio al final de la página de Streamlit
-    st.markdown("<br><br>", unsafe_allow_html=True)
+    # Integrar la gráfica en Streamlit
+    st.plotly_chart(fig, use_container_width=True)
