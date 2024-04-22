@@ -23,9 +23,6 @@ def grafica_rango_years(df_continentes):
         # Asigna las etiquetas de ticktext
         ticktext = [f"{abs(year)} a.C." if year < 0 else f"{year} d.C." for year in tickvals]
         
-        # Ordenar el DataFrame por 'Year' para asegurarse de que la gráfica se renderice correctamente
-        df_continentes.sort_values(by='Year', inplace=True)
-        
         # Crear la figura
         fig = go.Figure()
 
