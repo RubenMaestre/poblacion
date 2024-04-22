@@ -35,7 +35,7 @@ def display():
     df_continentes['Year_Label'] = df_continentes['Year'].apply(lambda x: f"{abs(x)} a.C." if x < 0 else f"{x} d.C.")
 
     if df_continentes is not None:
-        fig = px.line(df_continentes, x='Year_Label', y='Population density', color='Entity', 
+        fig = px.line(df_continentes, x='Year_Label', y='Population density', color={'Entity': 'Zona geográfica'}, 
                       title='Evolución de la densidad de población por zona geográfica',
                       labels={'Population density': 'Densidad de población (personas por km²)', 'Year_Label': 'Año'})
 
