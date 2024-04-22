@@ -1,7 +1,8 @@
 # paginas/densidad.py
 import streamlit as st
 import plotly.graph_objects as go
-from modules.cargar_df import cargar_df 
+from modules.cargar_df import cargar_df
+from modules.graph.grafica_inicio import plot_top_20_density
 
 def display():
     df, df_continentes, df_ingresos = cargar_df()
@@ -14,4 +15,5 @@ def display():
     st.markdown("<h1 style='text-align: center;'>Densidad</h1>", unsafe_allow_html=True)
     st.markdown("<br><br>", unsafe_allow_html=True)
 
+    plot_top_20_density(df)
     
