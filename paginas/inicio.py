@@ -39,38 +39,33 @@ def display():
         lambda x: f"{abs(x)} a.C." if x < 0 else f"{x} d.C."
     )
 
-    # Definir ticks para el eje x que sean uniformes a lo largo de la escala de tiempo
-    # Desde el año más antiguo hasta el más reciente, en intervalos de 100 años
-    tickvals = np.arange(df_continentes['Year'].min(), df_continentes['Year'].max() + 1, 100)
-    ticktext = [f"{abs(year)} a.C." if year < 0 else f"{year} d.C." for year in tickvals]
+    # Especificar manualmente los años que queremos que aparezcan en el eje x
+    tickvals_years = [-10000, -5000, -2000, -1000, -500, -200, 0, 200, 500, 800, 
+                       1000, 1200, 1400, 1600, 1800, 1850, 1900, 1950, 2000, 2020, 2050, 2100]
+    ticktext = [f"{abs(year)} a.C." if year < 0 else f"{year} d.C." for year in tickvals_years]
 
-    # Crear la figura
+    # Crear la figura con Plotly
     fig = go.Figure()
 
-    # Añadir trazos para cada entidad
+    # Añadir una línea para cada 'Entity'
     for entity in df_continentes['Entity'].unique():
         df_entity = df_continentes[df_continentes['Entity'] == entity]
         fig.add_trace(go.Scatter(
-            x=df_entity['Year'],  # Usar la columna 'Year' directamente para un mapeo correcto en el eje x
+            x=df_entity['Year_Label'], 
             y=df_entity['Population density'],
-            mode='lines',
+            mode='lines', 
             name=entity
         ))
+    
+    # Actualizar los ticks del eje X con los valores y textos personalizados
+    fig.update_xaxes(tickvals=tickvals_years, ticktext=ticktext)
 
-    # Actualizar los ticks del eje X para mostrar cada 100 años y asegurar que se extienden a lo largo de todo el eje
-    fig.update_xaxes(tickvals=tickvals, ticktext=ticktext)
-
-    # Configurar el layout de la figura para que incluya todos los años
+    # Actualizar el resto de la figura
     fig.update_layout(
         title='Evolución de la densidad de población por zona geográfica',
         xaxis_title='Año',
         yaxis_title='Densidad de población (personas por km²)',
-        legend_title='Zona geográfica',
-        xaxis=dict(
-            tickmode='array',
-            type='linear',
-            showgrid=True,  # Puede activar o desactivar la cuadrícula para mayor claridad
-        )
+        legend_title='Zona geográfica'
     )
 
     # Mostrar la figura en Streamlit
