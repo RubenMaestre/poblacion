@@ -1,6 +1,7 @@
 # paginas/inicio.py
 import streamlit as st
 import plotly.express as px
+import plotly.graph_objects as go
 from modules.cargar_df import cargar_df
 
 def display():
