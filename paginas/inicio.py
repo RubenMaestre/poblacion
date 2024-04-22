@@ -32,26 +32,34 @@ def display():
         """, unsafe_allow_html=True)
 
     # Crear y mostrar la gráfica de Plotly
+
+    df_continentes['Year_Label'] = df_continentes['Year'].apply(
+    lambda x: f"{abs(x)} BCE" if x < 0 else f"{x} CE"
+    )
     if df_continentes is not None:
-        # Asegúrate de que la columna 'Year_Label' está creada
+        # Crear la columna 'Year_Label' en df_continentes
         df_continentes['Year_Label'] = df_continentes['Year'].apply(lambda x: f"{abs(x)} a.C." if x < 0 else f"{x} d.C.")
 
-        # Definir años específicos para los ticks del eje x
-        x_ticks_years = [-10000, -5000, -2000, -1000, -500, -100, 0, 100, 300, 500, 800, 1000, 1200, 1400, 1600, 1800, 1900, 1950, 1980, 2000, 2010, 2020, 2050, 2100]
-        x_ticks_labels = [f"{abs(x)} a.C." if x < 0 else f"{x} d.C." for x in x_ticks_years]
+        # Define los años específicos para los ticks del eje x
+        custom_x_ticks = [-10000, -5000, -2000, -1000, -500, -100, 0, 100, 300, 500, 800, 1000, 1200, 1400, 1600, 1800, 1900, 1950, 1980, 2000, 2010, 2020, 2050, 2100]
+        # Genera las etiquetas de ticks correspondientes a partir de 'Year_Label'
+        custom_x_labels = [df_continentes[df_continentes['Year'] == year]['Year_Label'].iloc[0] for year in custom_x_ticks]
 
+        # Crea la gráfica
         fig = px.line(df_continentes, x='Year_Label', y='Population density', color='Entity', 
                       title='Evolución de la densidad de población por zona geográfica',
-                      labels={
-                          'Population density': 'Densidad de población (personas por km²)',
-                          'Year_Label': 'Año',
-                          'Entity': 'Zona geográfica'
-                      })
+                      labels={'Population density': 'Densidad de población (personas por km²)',
+                              'Year_Label': 'Año',
+                              'Entity': 'Zona geográfica'})
 
-        # Configurar los ticks del eje x
-        fig.update_xaxes(tickvals=x_ticks_labels, ticktext=x_ticks_labels)
+        # Actualiza los ticks del eje x para que se correspondan con los años personalizados
+        fig.update_xaxes(tickvals=custom_x_ticks, ticktext=custom_x_labels)
 
-        # Usar esta función para integrar la gráfica en Streamlit
+        # Suavizar las líneas de la gráfica
+        fig.update_traces(line_shape='spline')
+
+        # Integrar la gráfica en Streamlit
         st.plotly_chart(fig, use_container_width=True)
 
+    # Espacio al final de la página de Streamlit
     st.markdown("<br><br>", unsafe_allow_html=True)
