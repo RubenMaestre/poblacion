@@ -38,34 +38,42 @@ def display():
     df_continentes['Year_Label'] = df_continentes['Year'].apply(
         lambda x: f"{abs(x)} a.C." if x < 0 else f"{x} d.C."
     )
-
-    # Especificar manualmente los años que queremos que aparezcan en el eje x
-    tickvals_years = [-10000, -5000, -2000, -1000, -500, -200, 0, 200, 500, 800, 
+    
+    # Especificar manualmente los ticks que queremos en el eje x
+    specified_years = [-10000, -5000, -2000, -1000, -500, -200, 0, 200, 500, 800, 
                        1000, 1200, 1400, 1600, 1800, 1850, 1900, 1950, 2000, 2020, 2050, 2100]
-    ticktext = [f"{abs(year)} a.C." if year < 0 else f"{year} d.C." for year in tickvals_years]
+    
+    # Asegurarse de que solo se usen los años que existen en el DataFrame
+    tickvals = [year for year in specified_years if year in df_continentes['Year'].values]
+    ticktext = [df_continentes[df_continentes['Year'] == year]['Year_Label'].iloc[0] for year in tickvals]
 
-    # Crear la figura con Plotly
+    # Crear la figura
     fig = go.Figure()
 
-    # Añadir una línea para cada 'Entity'
+    # Añadir trazos para cada entidad
     for entity in df_continentes['Entity'].unique():
         df_entity = df_continentes[df_continentes['Entity'] == entity]
         fig.add_trace(go.Scatter(
-            x=df_entity['Year_Label'], 
+            x=df_entity['Year_Label'],  # Se mantiene el uso de 'Year_Label' para el eje x
             y=df_entity['Population density'],
-            mode='lines', 
+            mode='lines',
             name=entity
         ))
-    
-    # Actualizar los ticks del eje X con los valores y textos personalizados
-    fig.update_xaxes(tickvals=tickvals_years, ticktext=ticktext)
 
-    # Actualizar el resto de la figura
+    # Actualizar los ticks del eje x
+    fig.update_xaxes(tickvals=tickvals, ticktext=ticktext)
+
+    # Configurar el layout de la figura
     fig.update_layout(
         title='Evolución de la densidad de población por zona geográfica',
         xaxis_title='Año',
         yaxis_title='Densidad de población (personas por km²)',
-        legend_title='Zona geográfica'
+        legend_title='Zona geográfica',
+        xaxis=dict(
+            tickmode='array',
+            type='linear',
+            showgrid=True,
+        )
     )
 
     # Mostrar la figura en Streamlit
