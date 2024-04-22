@@ -1,12 +1,13 @@
 # modules/graph/top_20_density.py
 import plotly.graph_objects as go
 import pandas as pd
+import streamlit as st
 
 def plot_top_20_density(df):
     # Asegurarse de que el DataFrame contenga los datos correctos
     if df.empty or 'Year' not in df.columns or 'Population density' not in df.columns:
-        print("DataFrame no tiene los datos necesarios.")
-        return None
+        st.write("DataFrame no tiene los datos necesarios.")
+        return  # Usar return para salir si no hay datos adecuados
 
     # Filtrar datos para el año 2024
     df_2024 = df[df['Year'] == 2024]
@@ -19,15 +20,15 @@ def plot_top_20_density(df):
 
     for index, row in top_20_densidad.iterrows():
         # Calcular el número de puntos en función de la densidad (normalizado)
-        num_points = int((row['Population density'] / top_20_densidad['Population density'].max()) * 100)  # Normalizar respecto al máximo
+        num_points = int((row['Population density'] / top_20_densidad['Population density'].max()) * 100)
 
         # Añadir un scatter para cada país
         fig.add_trace(go.Scatter(
-            x=[index % 5] * num_points,  # Posición x basada en el índice para distribuir los países en el gráfico
-            y=[index // 5] * num_points,  # Posición y basada en el índice
+            x=[index % 5] * num_points,
+            y=[index // 5] * num_points,
             mode='markers',
             marker=dict(size=10),
-            name=row['Entity']  # Nombre del país
+            name=row['Entity']
         ))
 
     fig.update_layout(
@@ -37,4 +38,5 @@ def plot_top_20_density(df):
         showlegend=True
     )
 
-    return fig
+    # Mostrar la figura en Streamlit directamente
+    st.plotly_chart(fig, use_container_width=True)
