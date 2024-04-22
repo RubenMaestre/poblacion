@@ -7,9 +7,9 @@ set_global_page_config()
 
 st.markdown("Hola Mundo")
 # Importaciones adicionales y lógica de la aplicación aquí
-#from modules.create_sidebar import create_sidebar
+from modules.create_sidebar import create_sidebar
 
 # Otros comandos de Streamlit y funciones deben ir después de set_page_config()
-#create_sidebar()
+create_sidebar()
 
 
