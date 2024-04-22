@@ -24,10 +24,10 @@ def grafica_rango_years(df_continentes):
                     return f"{tickval} d.C."
 
                 # Aplicar la función a los tickvals actuales del eje x
-        tickvals = fig['layout']['xaxis']['tickvals']  # Esto asume que ya hay ticks generados automáticamente
-        ticktext = [custom_format_tickvals(tv) for tv in tickvals]
+        tickvals = np.arange(df_continentes['Year'].min(), df_continentes['Year'].max() + 1, 1000)
+        ticktext = [f"{abs(year)} a.C." if year < 0 else f"{year} d.C." for year in tickvals]
 
-                # Actualizar los ticks del eje X
+        # Actualizar los ticks del eje X para mostrar cada 1000 años con la inclinación deseada
         fig.update_xaxes(tickvals=tickvals, ticktext=ticktext, tickangle=45)
 
                 # Mostrar la figura en Streamlit
