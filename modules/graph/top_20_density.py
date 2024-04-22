@@ -23,3 +23,5 @@ def plot_top_20_density(df):
 
     # Ordenar las barras de mayor a menor
     fig.update_layout(barmode='stack', xaxis={'categoryorder':'total descending'})
+
+    st.plotly_chart(plot_top_20_density(df), use_container_width=True)
