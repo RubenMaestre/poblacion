@@ -33,12 +33,12 @@ def display():
 
     # Crear y mostrar la gráfica de Plotly
     if df_continentes is not None:
-        # Crear la columna 'Year_Label' en df_continentes
+        # Asegúrate de que la columna 'Year_Label' está creada
         df_continentes['Year_Label'] = df_continentes['Year'].apply(lambda x: f"{abs(x)} a.C." if x < 0 else f"{x} d.C.")
 
-        # Configuración de las marcas para el eje X
-        x_ticks = {year: f"{abs(year)} a.C." if year < 0 else f"{year} d.C." for year in range(-10000, 2021, 1000)}
-        x_ticks.update({year: f"{year} d.C." for year in range(0, 2021, 50)})
+        # Definir años específicos para los ticks del eje x
+        x_ticks_years = [-10000, -5000, -2000, -1000, -500, -100, 0, 100, 300, 500, 800, 1000, 1200, 1400, 1600, 1800, 1900, 1950, 1980, 2000, 2010, 2020, 2050, 2100]
+        x_ticks_labels = [f"{abs(x)} a.C." if x < 0 else f"{x} d.C." for x in x_ticks_years]
 
         fig = px.line(df_continentes, x='Year_Label', y='Population density', color='Entity', 
                       title='Evolución de la densidad de población por zona geográfica',
@@ -48,8 +48,8 @@ def display():
                           'Entity': 'Zona geográfica'
                       })
 
-        # Actualizar marcas en el eje X
-        fig.update_xaxes(tickvals=list(x_ticks.keys()), ticktext=list(x_ticks.values()))
+        # Configurar los ticks del eje x
+        fig.update_xaxes(tickvals=x_ticks_labels, ticktext=x_ticks_labels)
 
         # Usar esta función para integrar la gráfica en Streamlit
         st.plotly_chart(fig, use_container_width=True)
