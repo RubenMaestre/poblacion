@@ -17,8 +17,20 @@ def grafica_rango_years(df_continentes):
             title='Evolución de la densidad de población por zona geográfica',
             labels={'Population density': 'Densidad de población (personas por km²)', 'Year': 'Año', 'Entity': 'Zona geográfica'}
         )
+        def custom_format_tickvals(tickval):
+                if tickval < 0:
+                    return f"{abs(tickval)} a.C."
+                else:
+                    return f"{tickval} d.C."
 
-        # Mostrar la figura en Streamlit
+                # Aplicar la función a los tickvals actuales del eje x
+        tickvals = fig['layout']['xaxis']['tickvals']  # Esto asume que ya hay ticks generados automáticamente
+        ticktext = [custom_format_tickvals(tv) for tv in tickvals]
+
+                # Actualizar los ticks del eje X
+        fig.update_xaxes(tickvals=tickvals, ticktext=ticktext, tickangle=45)
+
+                # Mostrar la figura en Streamlit
         st.plotly_chart(fig, use_container_width=True)
     else:
         st.write("No hay datos disponibles para mostrar.")
