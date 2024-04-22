@@ -64,8 +64,9 @@ def display():
         # Actualiza los ticks del eje x para que se correspondan con los años personalizados
         fig.update_xaxes(tickvals=custom_x_ticks, ticktext=custom_x_labels)
 
-        # Suavizar las líneas de la gráfica
-        fig.update_traces(line_shape='spline')
+        # Suavizar las líneas de la gráfica, asegurándonos de que no estamos en un modo 'scattergl'
+        if 'scattergl' not in fig.data[0].type:
+            fig.update_traces(line_shape='spline')
 
         # Integrar la gráfica en Streamlit
         st.plotly_chart(fig, use_container_width=True)
