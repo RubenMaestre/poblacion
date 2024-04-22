@@ -2,7 +2,7 @@
 import streamlit as st
 import plotly.graph_objects as go
 from modules.cargar_df import cargar_df
-from modules.graph.grafica_inicio import plot_top_20_density
+from modules.graph.top_20_density import plot_top_20_density
 
 def display():
     df, df_continentes, df_ingresos = cargar_df()
