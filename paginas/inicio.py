@@ -32,10 +32,15 @@ def display():
         """, unsafe_allow_html=True)
 
     # Crear y mostrar la gráfica de Plotly
-    if df_continentes is not None:
-        fig = px.line(df_continentes, x='Year', y='Population density', color='Entity', 
-                      title='Evolución de la Densidad de Población por Zona Geográfica',
-                      labels={'Population density': 'Densidad de Población (personas por km²)', 'Year': 'Año'})
-        st.plotly_chart(fig, use_container_width=True)  # Usar esta función para integrar la gráfica en Streamlit
+    df_continentes['Year_Label'] = df_continentes['Year'].apply(lambda x: f"{abs(x)} a.C." if x < 0 else f"{x} d.C.")
 
-    st.markdown("<br><br>", unsafe_allow_html=True)  # Espacio al final de la página
+    if df_continentes is not None:
+        fig = px.line(df_continentes, x='Year_Label', y='Population density', color='Entity', 
+                      title='Evolución de la densidad de población por zona geográfica',
+                      labels={'Population density': 'Densidad de población (personas por km²)', 'Year_Label': 'Año'})
+
+        # Usar esta función para integrar la gráfica en Streamlit
+        st.plotly_chart(fig, use_container_width=True)
+
+    # Espacio al final de la página
+    st.markdown("<br><br>", unsafe_allow_html=True)
