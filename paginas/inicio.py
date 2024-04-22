@@ -1,7 +1,5 @@
 # paginas/inicio.py
 import streamlit as st
-import plotly.express as px
-import numpy as np
 import plotly.graph_objects as go
 from modules.cargar_df import cargar_df 
 from modules.graph.grafica_inicio import grafica_rango_years
