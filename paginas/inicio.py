@@ -33,6 +33,9 @@ def display():
 
     # Crear y mostrar la gráfica de Plotly
     if df_continentes is not None:
+        # Crear la columna 'Year_Label' en df_continentes
+        df_continentes['Year_Label'] = df_continentes['Year'].apply(lambda x: f"{abs(x)} a.C." if x < 0 else f"{x} d.C.")
+
         # Configuración de las marcas para el eje X
         x_ticks = {year: f"{abs(year)} a.C." if year < 0 else f"{year} d.C." for year in range(-10000, 2021, 1000)}
         x_ticks.update({year: f"{year} d.C." for year in range(0, 2021, 50)})
