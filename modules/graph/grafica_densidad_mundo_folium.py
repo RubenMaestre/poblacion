@@ -36,7 +36,7 @@ def plot_population_density_map_with_folium(df):
         fill_opacity=0.7,
         line_opacity=0.2,
         legend_name='Log of Population Density',
-        threshold_scale=colormap.colors,  # Usa la escala de colores con los pasos definidos
+        threshold_scale=[min_density_log] + colormap.colors + [max_density_log],  # Usa la escala de colores con los pasos definidos
         reset=True
     ).add_to(m)
 
