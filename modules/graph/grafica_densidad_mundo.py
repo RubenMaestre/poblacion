@@ -12,7 +12,7 @@ def plot_population_density_map(df):
     folium.Choropleth(
         geo_data='https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json',
         name='choropleth',
-        data=df_2024,
+        data=df_2023,
         columns=['Code', 'Population density'],
         key_on='feature.id',
         fill_color='YlOrRd',
