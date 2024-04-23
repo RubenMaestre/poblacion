@@ -24,6 +24,7 @@ def display():
     fig = plot_population_density_map_with_plotly(df)
     st.plotly_chart(fig, use_container_width=True)
 
-    m = plot_population_density_map_with_folium(df)  # Genera el mapa de Folium
-    folium_static(m)
+    map_width, map_height = 1200, 500
+    m = plot_population_density_map_with_folium(df, width=map_width, height=map_height)
+    folium_static(m, width=map_width)
     

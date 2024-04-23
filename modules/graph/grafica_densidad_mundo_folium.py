@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import branca.colormap as cm
 
-def plot_population_density_map_with_folium(df):
+def plot_population_density_map_with_folium(df, width=1200, height=500):
     df_2023 = df[df['Year'] == 2023].dropna(subset=['Population density'])
     df_2023 = df_2023[~df_2023['Code'].str.startswith('OWID')]
     
@@ -24,7 +24,8 @@ def plot_population_density_map_with_folium(df):
     threshold_scale = np.linspace(min_density_log, max_density_log, steps).tolist()
 
     # Crea un mapa base
-    m = folium.Map(location=[20, 0], tiles='cartodbpositron', zoom_start=2)
+    m = folium.Map(location=[20, 0], tiles='cartodbpositron', zoom_start=2, width=width, height=height)
+
     
     # Añade la escala de colores al mapa
     colormap.add_to(m)
