@@ -13,17 +13,18 @@ def plot_population_density_map_with_folium(df):
     # Define los límites de la escala de colores en función de los datos logarítmicos
     min_density_log = df_2023['Log Population Density'].min()
     max_density_log = df_2023['Log Population Density'].max()
+
+    # Crea una escala de colores lineal
+    colormap = cm.linear.YlOrRd_09.scale(min_density_log, max_density_log)
     
-    # Define una escala de colores con muchos pasos
-    steps = 100  # Define el número de colores/pasos en la escala
-    colormap = cm.linear.YlOrRd_09.scale(min_density_log, max_density_log).to_step(steps)
-    colormap.caption = 'Log of Population Density'
+    # Crea una lista de umbrales utilizando un número deseado de pasos
+    threshold_scale = np.linspace(min_density_log, max_density_log, steps).tolist()
 
     # Crea un mapa base
     m = folium.Map(location=[20, 0], tiles='cartodbpositron', zoom_start=2)
     
     # Añade la escala de colores al mapa
-    m.add_child(colormap)
+    colormap.add_to(m)
 
     # Añade un mapa coroplético al mapa base usando los datos logarítmicos
     folium.Choropleth(
@@ -36,7 +37,7 @@ def plot_population_density_map_with_folium(df):
         fill_opacity=0.7,
         line_opacity=0.2,
         legend_name='Log of Population Density',
-        threshold_scale=[min_density_log] + colormap.colors + [max_density_log],  # Usa la escala de colores con los pasos definidos
+        threshold_scale=threshold_scale,  # Define manualmente la escala de umbrales
         reset=True
     ).add_to(m)
 
