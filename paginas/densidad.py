@@ -1,9 +1,11 @@
 # paginas/densidad.py
 import streamlit as st
+from streamlit_folium import folium_static
 import plotly.graph_objects as go
 from modules.cargar_df import cargar_df
 from modules.graph.top_20_density import plot_top_20_density
 from modules.graph.grafica_densidad_mundo import plot_population_density_map_with_plotly
+from modules.graph.grafica_densidad_mundo_folium import plot_population_density_map_with_folium
 
 def display():
     df, df_continentes, df_ingresos = cargar_df()
@@ -21,4 +23,7 @@ def display():
     st.markdown("<br><br>", unsafe_allow_html=True)
     fig = plot_population_density_map_with_plotly(df)
     st.plotly_chart(fig, use_container_width=True)
+
+    m = plot_population_density_map_with_folium(df)  # Genera el mapa de Folium
+    folium_static(m)
     
