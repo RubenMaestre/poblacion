@@ -7,17 +7,16 @@ def plot_population_density_map_with_folium(df, width=1200, height=500):
     df_2023 = df[df['Year'] == 2023].dropna(subset=['Population density'])
     df_2023 = df_2023[~df_2023['Code'].str.startswith('OWID')]
     
-    # Calcula el logaritmo de la densidad de población para reducir el impacto de valores extremadamente altos
-    df_2023['Log Population Density'] = np.log1p(df_2023['Population density'])
+    # Utiliza los valores reales de densidad de población
+    min_density = df_2023['Population density'].min()
+    max_density = df_2023['Population density'].max()
 
-    # Define los límites de la escala de colores en función de los datos logarítmicos
-    min_density_log = df_2023['Log Population Density'].min()
-    max_density_log = df_2023['Log Population Density'].max()
+    # Define el número de pasos en la escala de colores
+    steps = 100
 
     # Crea una escala de colores lineal
-    # Si no necesitas añadir esta escala de colores como leyenda, puedes omitir esta parte
-    # colormap = cm.linear.YlOrRd_09.scale(min_density_log, max_density_log).to_step(steps)
-    # colormap.caption = 'Log of Population Density'
+    colormap = cm.linear.YlOrRd_09.scale(min_density, max_density).to_step(steps)
+    colormap.caption = 'Population Density'
 
     # Crea un mapa base
     m = folium.Map(location=[20, 0], tiles='cartodbpositron', zoom_start=2, width=width, height=height)
@@ -26,18 +25,17 @@ def plot_population_density_map_with_folium(df, width=1200, height=500):
     folium.Choropleth(
         geo_data='https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json',
         data=df_2023,
-        columns=['Code', 'Log Population Density'],
+        columns=['Code', 'Population density'],
         key_on='feature.id',
         fill_color='YlOrRd',
         fill_opacity=0.7,
         line_opacity=0.2,
-        # Elimina legend_name para no generar la leyenda de folium.Choropleth
-        # threshold_scale=threshold_scale,  # Si quieres definir una escala de umbrales específica
+        threshold_scale=colormap.colors,  # Usa la escala de colores creada
         reset=True
     ).add_to(m)
 
-    # Si no quieres añadir la escala de colores personalizada como leyenda, omite esta línea
-    # m.add_child(colormap)
+    # Añade la escala de colores al mapa
+    m.add_child(colormap)
 
     # Añade el control de capas al mapa
     folium.LayerControl().add_to(m)
