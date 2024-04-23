@@ -15,6 +15,17 @@ def display():
     st.markdown("<h1 style='text-align: center;'>Densidad de Población</h1>", unsafe_allow_html=True)
     st.markdown("<br><br>", unsafe_allow_html=True)
 
+    # Introducción a la densidad de población
+    st.markdown("""
+        <div style="text-align: justify;">
+            <p>La <b>densidad de población</b> es una medida que relaciona la cantidad de personas que viven en una unidad de área, generalmente expresada como habitantes por kilómetro cuadrado. Esta cifra es fundamental para entender cómo se distribuyen los seres humanos en las diferentes regiones del planeta y es un indicador crítico en la planificación urbana, la gestión de recursos y el desarrollo sostenible.</p>
+            <p>Una alta densidad de población a menudo sugiere una concentración de oportunidades económicas, servicios y conectividad; sin embargo, también puede acarrear desafíos significativos relacionados con la congestión, la presión sobre la infraestructura y el ambiente. En contraste, una densidad baja puede implicar una mayor disponibilidad de espacio, pero también podría reflejar limitaciones en términos de acceso a servicios y desarrollo económico.</p>
+            <p>Esta página proporciona una mirada en profundidad a la densidad de población a nivel mundial, ofreciendo una serie de visualizaciones que nos permiten comprender la dinámica poblacional de manera intuitiva y analítica.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
     # Texto de análisis
     st.markdown("""
         <div style="text-align: justify;">
