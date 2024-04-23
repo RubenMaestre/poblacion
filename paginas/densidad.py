@@ -19,7 +19,7 @@ def display():
     st.markdown("""
     <style>
         .big-font {
-            font-size:30px !important;
+            font-size:24px;
             text-align: justify;
         }
     </style>
@@ -49,5 +49,15 @@ def display():
 
     st.markdown("<br><br>", unsafe_allow_html=True)
 
+    st.markdown("""
+    <div style="text-align: justify;">
+        <p>La gráfica que presentamos a continuación ofrece una vista panorámica de cómo se dispersan y concentran las poblaciones humanas alrededor del globo. A través de un mapa de calor, con tonalidades que transitan del blanco al rojo intenso, ilustramos los contrastes en la densidad de población de cada país en el año 2024. Los países teñidos en los tonos más pálidos indican zonas con menor densidad poblacional, donde la vastedad del territorio se une con un número reducido de habitantes, traduciéndose en un amplio espacio por persona. Por otro lado, las áreas en rojo resaltan las regiones donde la gente vive más agrupada, y por ende, donde la densidad de población alcanza sus máximos globales.</p>
+        <p>Para reflejar de manera más equitativa la diversidad en la magnitud de la densidad poblacional, hemos aplicado una normalización logarítmica a los datos, escalando los valores de 0 a 100 para la representación visual. Este enfoque logarítmico nos permite apreciar mejor las diferencias en las áreas de media y baja densidad, que de otro modo podrían quedar eclipsadas por los extremos más altos. Al pasar el cursor sobre cada país, ofrecemos la posibilidad de descubrir el valor real de densidad de población, proporcionando así una capa adicional de información que enriquece la comprensión de estos datos.</p>
+        <p>Este mapa nos permite observar patrones interesantes, como la alta densidad en zonas urbanas de Asia y Europa, contrastando con las amplias regiones menos pobladas de Australia, Canadá y Rusia. También es notable la relativa uniformidad en la densidad de América del Sur y África, contrastada con los puntos de alta densidad de países como Nigeria y Bangladesh.</p>
+        <p>La visualización nos lleva a reflexionar sobre los retos y oportunidades que supone la gestión de las regiones altamente pobladas en términos de sostenibilidad, infraestructura y servicios. Asimismo, nos incita a pensar en las dinámicas económicas, sociales y medioambientales que emergen de los patrones de asentamiento humano a escala mundial.</p>
+    </div>
+    <hr style="margin-top: 2rem;">
+    """, unsafe_allow_html=True)
+    
     fig = plot_population_density_map_with_plotly(df)
     st.plotly_chart(fig, use_container_width=True)
