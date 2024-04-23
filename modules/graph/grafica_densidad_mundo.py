@@ -2,11 +2,11 @@ import folium
 from streamlit_folium import folium_static
 
 def plot_population_density_map(df):
-    # Filtrar el DataFrame para el año 2024
-    df_2024 = df[df['Year'] == 2024]
+    # Filtrar el DataFrame para el año 2023
+    df_2023 = df[df['Year'] == 2023]
 
     # Inicializar un mapa del mundo con un tamaño específico
-    m = folium.Map(location=[20, 0], tiles="cartodbpositron", zoom_start=2, width='1440px', height='720px')
+    m = folium.Map(location=[20, 0], tiles="cartodbpositron", zoom_start=2, width='1080px', height='720px')
 
     # Usar un Choropleth para visualizar la densidad de población
     folium.Choropleth(
