@@ -5,7 +5,6 @@ import plotly.graph_objects as go
 from modules.cargar_df import cargar_df
 from modules.graph.top_20_density import plot_top_20_density
 from modules.graph.grafica_densidad_mundo import plot_population_density_map_with_plotly
-from modules.graph.grafica_densidad_mundo_folium import plot_population_density_map_with_folium
 
 def display():
     df, df_continentes, df_ingresos = cargar_df()
@@ -24,7 +23,3 @@ def display():
     fig = plot_population_density_map_with_plotly(df)
     st.plotly_chart(fig, use_container_width=True)
 
-    map_width, map_height = 1200, 500
-    m = plot_population_density_map_with_folium(df, width=map_width, height=map_height)
-    folium_static(m, width=map_width)
-    
