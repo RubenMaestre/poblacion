@@ -14,10 +14,13 @@ def plot_population_density_map_with_folium(df):
     min_density_log = df_2023['Log Population Density'].min()
     max_density_log = df_2023['Log Population Density'].max()
 
+    # Define el número de pasos en la escala de colores
+    steps = 100
+
     # Crea una escala de colores lineal
     colormap = cm.linear.YlOrRd_09.scale(min_density_log, max_density_log)
     
-    # Crea una lista de umbrales utilizando un número deseado de pasos
+    # Crea una lista de umbrales utilizando el número de pasos definido
     threshold_scale = np.linspace(min_density_log, max_density_log, steps).tolist()
 
     # Crea un mapa base
@@ -37,7 +40,7 @@ def plot_population_density_map_with_folium(df):
         fill_opacity=0.7,
         line_opacity=0.2,
         legend_name='Log of Population Density',
-        threshold_scale=threshold_scale,  # Define manualmente la escala de umbrales
+        threshold_scale=threshold_scale,  # Usa la escala de umbrales creada
         reset=True
     ).add_to(m)
 
