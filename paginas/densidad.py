@@ -12,7 +12,7 @@ def display():
     st.markdown("<br><br>", unsafe_allow_html=True)
 
     # Título de la página
-    st.markdown("<h1 style='text-align: center;'>Densidad de Población</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Densidad de población</h1>", unsafe_allow_html=True)
     st.markdown("<br><br>", unsafe_allow_html=True)
 
     # Introducción a la densidad de población con un tamaño de texto mayor
@@ -58,6 +58,6 @@ def display():
     </div>
     <hr style="margin-top: 2rem;">
     """, unsafe_allow_html=True)
-    
+
     fig = plot_population_density_map_with_plotly(df)
     st.plotly_chart(fig, use_container_width=True)
