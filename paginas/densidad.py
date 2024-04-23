@@ -3,7 +3,7 @@ import streamlit as st
 import plotly.graph_objects as go
 from modules.cargar_df import cargar_df
 from modules.graph.top_20_density import plot_top_20_density
-from modules.graph.grafica_densidad_mundo import plot_population_density_map
+from modules.graph.grafica_densidad_mundo import plot_population_density_map_with_plotly
 
 def display():
     df, df_continentes, df_ingresos = cargar_df()
@@ -19,5 +19,6 @@ def display():
 
     plot_top_20_density(df)
     st.markdown("<br><br>", unsafe_allow_html=True)
-    plot_population_density_map(df)
+    fig = plot_population_density_map_with_plotly(df)
+    st.plotly_chart(fig, use_container_width=True)
     
