@@ -32,7 +32,7 @@ def plot_population_density_map_with_plotly(df):
 
     # Configuración manual de la leyenda para usar valores de densidad reales
     max_density = df_2024['Population density'].max()
-    step_values = np.exp(np.linspace(np.log1p(min_density_log), np.log1p(max_density), 6)) - 1  # Usamos log-scale para determinar los puntos medios
+    step_values = np.exp(np.linspace(np.log1p(min_log_density), np.log1p(max_density), 6)) - 1  # Usamos log-scale para determinar los puntos medios
     step_labels = [f"{v:.2f}" for v in step_values]
 
     fig.update_coloraxes(colorbar=dict(
