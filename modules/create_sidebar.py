@@ -1,7 +1,7 @@
 # modules/create_sidebar.py
 import streamlit as st
 from streamlit_option_menu import option_menu
-from paginas import inicio, densidad
+from paginas import inicio, densidad, poblacion
 
 def create_sidebar():
     # Añadir texto personalizado en el sidebar con markdown y HTML
@@ -15,8 +15,8 @@ def create_sidebar():
 
     # Crear el menú de opciones en el sidebar con option_menu
     with st.sidebar:
-        selected = option_menu("Menú", ["Inicio", "Densidad"],
-            icons=["house", "people"],
+        selected = option_menu("Menú", ["Inicio", "Densidad", "Población"],
+            icons=["house", "people", "family"],
             menu_icon="cast", default_index=0, orientation="vertical")
 
     # Llama a la función de la página correspondiente en función de la selección
@@ -24,4 +24,6 @@ def create_sidebar():
         inicio.display()
     elif selected == "Densidad":
         densidad.display()
+    elif selected == "Población":
+        poblacion.display()
 
