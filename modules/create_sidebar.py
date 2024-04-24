@@ -24,6 +24,6 @@ def create_sidebar():
         inicio.display()
     elif selected == "Densidad":
         densidad.display()
-    elif selected == "Población":
+    elif selected == "Poblacion":
         poblacion.display()
 
