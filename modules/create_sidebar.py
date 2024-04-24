@@ -14,8 +14,13 @@ def create_sidebar():
     )
 
     # Crear el menú de opciones en el sidebar con option_menu
+    menu_options = {
+    "Inicio": "Inicio",
+    "Densidad": "Densidad",
+    "Poblacion": "Población"  # Internamente usas 'Poblacion' pero muestras 'Población'
+}
     with st.sidebar:
-        selected = option_menu("Menú", ["Inicio", "Densidad", "Población"],
+        selected = option_menu("Menú", list(menu_options.keys()),
             icons=["house", "bar-chart-line", "people-fill"], 
             menu_icon="cast", default_index=0, orientation="vertical")
 
