@@ -15,7 +15,7 @@ def create_sidebar():
 
     # Crear el menú de opciones en el sidebar con option_menu
     with st.sidebar:
-        selected = option_menu("Menú", ["Inicio", "Densidad", "Población"],
+        selected = option_menu("Menú", ["Inicio", "Densidad", "Poblacion"],
             icons=["house", "bar-chart-line", "people-fill"], 
             menu_icon="cast", default_index=0, orientation="vertical")
 
